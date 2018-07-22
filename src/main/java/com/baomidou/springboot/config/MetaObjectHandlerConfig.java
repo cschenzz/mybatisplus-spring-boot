@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
 @Component
-public class MetaObjectHandlerConfig extends MetaObjectHandler {
+public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
   @Override
   public void insertFill(MetaObject metaObject) {

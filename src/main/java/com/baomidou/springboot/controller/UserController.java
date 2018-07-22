@@ -52,7 +52,7 @@ public class UserController extends ApiController {
      */
     @GetMapping("/test")
     public IPage<User> test() {
-        return userService.selectPage(new Page<User>(0, 12), null);
+        return userService.page(new Page<User>(0, 12), null);
     }
 
     /**
@@ -79,25 +79,25 @@ public class UserController extends ApiController {
      */
     @GetMapping("/test2")
     public User test2() {
-        System.err.println("删除一条数据：" + userService.deleteById(1L));
+        System.err.println("删除一条数据：" + userService.removeById(1L));
         System.err.println("deleteAll：" + userService.deleteAll());
-        System.err.println("插入一条数据：" + userService.insert(new User(1L, "张三", AgeEnum.TWO, 1)));
+        System.err.println("插入一条数据：" + userService.save(new User(1L, "张三", AgeEnum.TWO, 1)));
         User user = new User("张三", AgeEnum.TWO, 1);
-        boolean result = userService.insert(user);
+        boolean result = userService.save(user);
         // 自动回写的ID
         Long id = user.getId();
         System.err.println("插入一条数据：" + result + ", 插入信息：" + user.toString());
-        System.err.println("查询：" + userService.selectById(id).toString());
+        System.err.println("查询：" + userService.getById(id).toString());
         System.err.println("更新一条数据：" + userService.updateById(new User(1L, "三毛", AgeEnum.ONE, 1)));
         for (int i = 0; i < 5; ++i) {
-            userService.insert(new User(Long.valueOf(100 + i), "张三" + i, AgeEnum.ONE, 1));
+            userService.save(new User(Long.valueOf(100 + i), "张三" + i, AgeEnum.ONE, 1));
         }
-        IPage<User> userListPage = userService.selectPage(new Page<User>(1, 5), new QueryWrapper<User>());
+        IPage<User> userListPage = userService.page(new Page<User>(1, 5), new QueryWrapper<User>());
         System.err.println("total=" + userListPage.getTotal() + ", current list size=" + userListPage.getRecords().size());
 
-        userListPage = userService.selectPage(new Page<User>(1, 5), new QueryWrapper<User>().orderByDesc("name"));
+        userListPage = userService.page(new Page<User>(1, 5), new QueryWrapper<User>().orderByDesc("name"));
         System.err.println("total=" + userListPage.getTotal() + ", current list size=" + userListPage.getRecords().size());
-        return userService.selectById(1L);
+        return userService.getById(1L);
     }
 
     /**
@@ -108,8 +108,8 @@ public class UserController extends ApiController {
     public User test3() {
         User user = new User(1L, "王五", AgeEnum.ONE, 1);
         user.setPhone(PhoneEnum.CT);
-        userService.insertOrUpdate(user);
-        return userService.selectById(1L);
+        userService.saveOrUpdate(user);
+        return userService.getById(1L);
     }
 
     /**
@@ -119,7 +119,7 @@ public class UserController extends ApiController {
     public Object addUser() {
         User user = new User("张三'特殊`符号", AgeEnum.TWO, 1);
         user.setPhone(PhoneEnum.CUCC);
-        return userService.insert(user);
+        return userService.save(user);
     }
 
     /**
@@ -136,7 +136,8 @@ public class UserController extends ApiController {
     @GetMapping("/select_wrapper")
     public Object getUserByWrapper() {
         return userService.selectListByWrapper(new QueryWrapper<User>()
-                .lambda().like(User::getName, "毛"));
+                .lambda().like(User::getName, "毛")
+                .or(e -> e.like(User::getName, "张")));
     }
 
     /**
@@ -147,13 +148,18 @@ public class UserController extends ApiController {
      * 7、分页 size 一页显示数量  current 当前页码
      * 方式一：http://localhost:8080/user/page?size=1&current=1<br>
      * 方式二：http://localhost:8080/user/page_helper?size=1&current=1<br>
-     *
+     * <p>
      * 集合模式，不进行分页直接返回所有结果集：
      * http://localhost:8080/user/page?listMode=true
      */
     @GetMapping("/page")
-    public IPage page(Page page) {
-        return userService.selectPage(page, null);
+    public IPage page(Page page, boolean listMode) {
+        if (listMode) {
+            // size 小于 0 不在查询 total 及分页，自动调整为列表模式。
+            // 注意！！这个地方自己控制好！！
+            page.setSize(-1);
+        }
+        return userService.page(page, null);
     }
 
     /**
@@ -163,7 +169,7 @@ public class UserController extends ApiController {
     @GetMapping("/page_helper")
     public IPage pagehelper(Page page) {
         PageHelper.setPage(page);
-        page.setRecords(userService.selectList(null));
+        page.setRecords(userService.list(null));
         //获取总数并释放资源 也可以 PageHelper.getTotal()
         page.setTotal(PageHelper.freeTotal());
         return page;
@@ -183,7 +189,7 @@ public class UserController extends ApiController {
     @GetMapping("/test_transactional")
     public void testTransactional() {
         User user = new User(1000L, "测试事物", AgeEnum.ONE, 3);
-        userService.insert(user);
+        userService.save(user);
         System.out.println(" 这里手动抛出异常，自动回滚数据");
         throw new RuntimeException();
     }

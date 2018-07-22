@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.incrementer.H2KeyGenerator;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 
@@ -87,5 +88,14 @@ public class MybatisPlusConfig {
     @Bean
     public H2KeyGenerator getH2KeyGenerator() {
         return new H2KeyGenerator();
+    }
+
+
+    /**
+     * 性能分析拦截器，不建议生产使用
+     */
+    @Bean
+    public PerformanceInterceptor performanceInterceptor(){
+        return new PerformanceInterceptor();
     }
 }
