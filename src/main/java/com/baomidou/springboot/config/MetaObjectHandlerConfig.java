@@ -1,13 +1,14 @@
 package com.baomidou.springboot.config;
 
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import java.util.Date;
+
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
 @Component
-public class MetaObjectHandlerConfig implements MetaObjectHandler {
+public class MetaObjectHandlerConfig extends MetaObjectHandler {
 
   @Override
   public void insertFill(MetaObject metaObject) {

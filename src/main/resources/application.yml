@@ -54,7 +54,5 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 ##logging
-logging:
-  com:
-    baomidou:
-      springboot: debug
+#logging:
+#  level: warn

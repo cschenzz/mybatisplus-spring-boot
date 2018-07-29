@@ -1,23 +1,25 @@
 package com.baomidou.springboot.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.ApiAssert;
-import com.baomidou.mybatisplus.extension.api.ApiController;
-import com.baomidou.mybatisplus.extension.api.ApiResult;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.springboot.ErrorCode;
-import com.baomidou.springboot.entity.User;
-import com.baomidou.springboot.entity.enums.AgeEnum;
-import com.baomidou.springboot.entity.enums.PhoneEnum;
-import com.baomidou.springboot.service.IUserService;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.ApiAssert;
+import com.baomidou.mybatisplus.extension.api.ApiController;
+import com.baomidou.mybatisplus.extension.api.ApiResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageHelper;
+import com.baomidou.springboot.ErrorCode;
+import com.baomidou.springboot.entity.User;
+import com.baomidou.springboot.entity.enums.AgeEnum;
+import com.baomidou.springboot.entity.enums.PhoneEnum;
+import com.baomidou.springboot.service.IUserService;
 
 /**
  * 代码生成器，参考源码测试用例：
@@ -50,7 +52,7 @@ public class UserController extends ApiController {
      */
     @GetMapping("/test")
     public IPage<User> test() {
-        return userService.page(new Page<User>(0, 12), null);
+        return userService.selectPage(new Page<User>(0, 12), null);
     }
 
     /**
@@ -77,25 +79,25 @@ public class UserController extends ApiController {
      */
     @GetMapping("/test2")
     public User test2() {
-        System.err.println("删除一条数据：" + userService.removeById(1L));
+        System.err.println("删除一条数据：" + userService.deleteById(1L));
         System.err.println("deleteAll：" + userService.deleteAll());
-        System.err.println("插入一条数据：" + userService.save(new User(1L, "张三", AgeEnum.TWO, 1)));
+        System.err.println("插入一条数据：" + userService.insert(new User(1L, "张三", AgeEnum.TWO, 1)));
         User user = new User("张三", AgeEnum.TWO, 1);
-        boolean result = userService.save(user);
+        boolean result = userService.insert(user);
         // 自动回写的ID
         Long id = user.getId();
         System.err.println("插入一条数据：" + result + ", 插入信息：" + user.toString());
-        System.err.println("查询：" + userService.getById(id).toString());
+        System.err.println("查询：" + userService.selectById(id).toString());
         System.err.println("更新一条数据：" + userService.updateById(new User(1L, "三毛", AgeEnum.ONE, 1)));
         for (int i = 0; i < 5; ++i) {
-            userService.save(new User((long) (100 + i), "张三" + i, AgeEnum.ONE, 1));
+            userService.insert(new User(Long.valueOf(100 + i), "张三" + i, AgeEnum.ONE, 1));
         }
-        IPage<User> userListPage = userService.page(new Page<User>(1, 5), new QueryWrapper<User>());
+        IPage<User> userListPage = userService.selectPage(new Page<User>(1, 5), new QueryWrapper<User>());
         System.err.println("total=" + userListPage.getTotal() + ", current list size=" + userListPage.getRecords().size());
 
-        userListPage = userService.page(new Page<>(1, 5), new QueryWrapper<User>().orderByDesc("name"));
+        userListPage = userService.selectPage(new Page<User>(1, 5), new QueryWrapper<User>().orderByDesc("name"));
         System.err.println("total=" + userListPage.getTotal() + ", current list size=" + userListPage.getRecords().size());
-        return userService.getById(1L);
+        return userService.selectById(1L);
     }
 
     /**
@@ -106,8 +108,8 @@ public class UserController extends ApiController {
     public User test3() {
         User user = new User(1L, "王五", AgeEnum.ONE, 1);
         user.setPhone(PhoneEnum.CT);
-        userService.saveOrUpdate(user);
-        return userService.getById(1L);
+        userService.insertOrUpdate(user);
+        return userService.selectById(1L);
     }
 
     /**
@@ -117,7 +119,7 @@ public class UserController extends ApiController {
     public Object addUser() {
         User user = new User("张三'特殊`符号", AgeEnum.TWO, 1);
         user.setPhone(PhoneEnum.CUCC);
-        return userService.save(user);
+        return userService.insert(user);
     }
 
     /**
@@ -151,7 +153,20 @@ public class UserController extends ApiController {
      */
     @GetMapping("/page")
     public IPage page(Page page) {
-        return userService.page(page, null);
+        return userService.selectPage(page, null);
+    }
+
+    /**
+     * ThreadLocal 模式分页
+     * http://localhost:8080/user/page_helper?size=2&current=1
+     */
+    @GetMapping("/page_helper")
+    public IPage pagehelper(Page page) {
+        PageHelper.setPage(page);
+        page.setRecords(userService.selectList(null));
+        //获取总数并释放资源 也可以 PageHelper.getTotal()
+        page.setTotal(PageHelper.freeTotal());
+        return page;
     }
 
 
@@ -168,7 +183,7 @@ public class UserController extends ApiController {
     @GetMapping("/test_transactional")
     public void testTransactional() {
         User user = new User(1000L, "测试事物", AgeEnum.ONE, 3);
-        userService.save(user);
+        userService.insert(user);
         System.out.println(" 这里手动抛出异常，自动回滚数据");
         throw new RuntimeException();
     }
