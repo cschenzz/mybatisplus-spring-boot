@@ -10,6 +10,7 @@
 	<delete id="deleteAll">
 		DELETE FROM USER
 	</delete>
+
 	<select id="selectListByWrapper" resultType="com.baomidou.springboot.entity.User">
 		SELECT * FROM USER
 		<!-- 判断 wrapper 是否为空 emptyOfWhere -->

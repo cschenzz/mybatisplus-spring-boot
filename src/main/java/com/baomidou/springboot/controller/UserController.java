@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.extension.api.ApiAssert;
 import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.ApiResult;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.plugins.pagination.PageHelper;
 import com.baomidou.springboot.ErrorCode;
 import com.baomidou.springboot.entity.User;
 import com.baomidou.springboot.entity.enums.AgeEnum;
@@ -43,7 +42,7 @@ public class UserController extends ApiController {
      */
     @GetMapping("/api")
     public ApiResult<String> testError(String test) {
-        ApiAssert.isNull(ErrorCode.TEST, test);
+        ApiAssert.notNull(ErrorCode.TEST, test);
         return success(test);
     }
 
@@ -147,7 +146,6 @@ public class UserController extends ApiController {
      * <p>
      * 7、分页 size 一页显示数量  current 当前页码
      * 方式一：http://localhost:8080/user/page?size=1&current=1<br>
-     * 方式二：http://localhost:8080/user/page_helper?size=1&current=1<br>
      * <p>
      * 集合模式，不进行分页直接返回所有结果集：
      * http://localhost:8080/user/page?listMode=true
@@ -161,20 +159,6 @@ public class UserController extends ApiController {
         }
         return userService.page(page, null);
     }
-
-    /**
-     * ThreadLocal 模式分页
-     * http://localhost:8080/user/page_helper?size=2&current=1
-     */
-    @GetMapping("/page_helper")
-    public IPage pagehelper(Page page) {
-        PageHelper.setPage(page);
-        page.setRecords(userService.list(null));
-        //获取总数并释放资源 也可以 PageHelper.getTotal()
-        page.setTotal(PageHelper.freeTotal());
-        return page;
-    }
-
 
     /**
      * 测试事物
