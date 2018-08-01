@@ -11,8 +11,10 @@
 
 Mybatis Plus - Spring Boot Demo
 
-* boot version: 1.5.2.RELEASE
-* mp version: 2.0.7
+* jdk-version: 1.8 
+* spring-boot-version: 2.0.3.RELEASE
+* spring-framework-verson: 5.0.7.RELEASE
+* mp-boot-starter(mp)-version: 3.0-beta
 * database: h2(boot默认数据库，如需修改，请在application.properties中查看mysql配置)
 
 > 技术讨论 QQ 群 576493122[（有钱的捧个钱场【点击捐赠】, 没钱的捧个人场）](http://git.oschina.net/uploads/images/2015/1222/211207_0acab44e_12260.png)
