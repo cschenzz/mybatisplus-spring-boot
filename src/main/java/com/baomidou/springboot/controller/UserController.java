@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.ApiAssert;
 import com.baomidou.mybatisplus.extension.api.ApiController;
-import com.baomidou.mybatisplus.extension.api.ApiResult;
+import com.baomidou.mybatisplus.extension.api.Assert;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.springboot.ErrorCode;
 import com.baomidou.springboot.entity.User;
@@ -41,8 +41,8 @@ public class UserController extends ApiController {
      * http://localhost:8080/user/api?test=mybatisplus
      */
     @GetMapping("/api")
-    public ApiResult<String> testError(String test) {
-        ApiAssert.notNull(ErrorCode.TEST, test);
+    public R<String> testError(String test) {
+        Assert.notNull(ErrorCode.TEST, test);
         return success(test);
     }
 

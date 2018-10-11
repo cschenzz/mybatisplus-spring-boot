@@ -3,18 +3,18 @@ package com.baomidou.springboot;
 import com.baomidou.mybatisplus.extension.api.IErrorCode;
 
 public enum ErrorCode implements IErrorCode {
-    TEST("1000", "测试错误编码");
+    TEST(1000, "测试错误编码");
 
-    private String code;
+    private long code;
     private String msg;
 
-    ErrorCode(final String code, final String msg) {
+    ErrorCode(final long code, final String msg) {
         this.code = code;
         this.msg = msg;
     }
 
     @Override
-    public String getCode() {
+    public long getCode() {
         return code;
     }
 
