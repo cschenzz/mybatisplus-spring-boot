@@ -1,12 +1,12 @@
-package com.baomidou.springboot.entity;
+package com.sibo.springboot.entity;
 
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.springboot.entity.enums.AgeEnum;
-import com.baomidou.springboot.entity.enums.PhoneEnum;
+import com.sibo.springboot.entity.enums.AgeEnum;
+import com.sibo.springboot.entity.enums.PhoneEnum;
 
 /**
  * 用户表

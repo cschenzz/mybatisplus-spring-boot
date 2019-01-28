@@ -28,8 +28,8 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.baomidou.springboot.entity
-  typeEnumsPackage: com.baomidou.springboot.entity.enums
+  typeAliasesPackage: com.sibo.springboot.entity
+  typeEnumsPackage: com.sibo.springboot.entity.enums
   global-config:
     # 数据库相关配置
     db-config:

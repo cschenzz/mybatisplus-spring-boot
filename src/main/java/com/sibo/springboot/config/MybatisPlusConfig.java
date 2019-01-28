@@ -1,4 +1,4 @@
-package com.baomidou.springboot.config;
+package com.sibo.springboot.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 
 @Configuration
-//@MapperScan("com.baomidou.springboot.mapper*")//这个注解，作用相当于下面的@Bean MapperScannerConfigurer，2者配置1份即可
+//@MapperScan("com.sibo.springboot.mapper*")//这个注解，作用相当于下面的@Bean MapperScannerConfigurer，2者配置1份即可
 public class MybatisPlusConfig {
 
     /**
@@ -79,7 +79,7 @@ public class MybatisPlusConfig {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
-        scannerConfigurer.setBasePackage("com.baomidou.springboot.mapper*");
+        scannerConfigurer.setBasePackage("com.sibo.springboot.mapper*");
         return scannerConfigurer;
     }
 

@@ -1,4 +1,4 @@
-package com.baomidou.springboot;
+package com.sibo.springboot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.baomidou.springboot.config",
-        "com.baomidou.springboot.controller",
-        "com.baomidou.springboot.service"})
+        "com.sibo.springboot.config",
+        "com.sibo.springboot.controller",
+        "com.sibo.springboot.service"})
 public class Application {
 
     protected final static Logger logger = LoggerFactory.getLogger(Application.class);

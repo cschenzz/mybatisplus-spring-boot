@@ -1,4 +1,4 @@
-package com.baomidou.springboot.test;
+package com.sibo.springboot.test;
 
 /**
  * Created by jobob on 17/5/16.

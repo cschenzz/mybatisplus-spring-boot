@@ -1,4 +1,4 @@
-package com.baomidou.springboot.config;
+package com.sibo.springboot.config;
 
 import java.util.Date;
 

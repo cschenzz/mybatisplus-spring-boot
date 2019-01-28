@@ -1,4 +1,4 @@
-package com.baomidou.springboot.config;
+package com.sibo.springboot.config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,8 +11,6 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import com.baomidou.mybatisplus.extension.api.ApiResult;
 import com.baomidou.mybatisplus.extension.api.IErrorCode;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.enums.ApiErrorCode;

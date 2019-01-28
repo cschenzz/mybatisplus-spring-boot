@@ -1,4 +1,4 @@
-package com.baomidou.springboot.mapper;
+package com.sibo.springboot.mapper;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.springboot.SuperMapper;
-import com.baomidou.springboot.entity.User;
+import com.sibo.springboot.SuperMapper;
+import com.sibo.springboot.entity.User;
 
 /**
  * User 表数据库控制层接口

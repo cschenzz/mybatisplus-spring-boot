@@ -1,4 +1,4 @@
-package com.baomidou.springboot.entity;
+package com.sibo.springboot.entity;
 
 import java.io.Serializable;
 

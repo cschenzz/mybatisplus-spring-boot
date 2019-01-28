@@ -1,11 +1,10 @@
-package com.baomidou.springboot.service;
+package com.sibo.springboot.service;
 
 import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.springboot.entity.User;
+import com.sibo.springboot.entity.User;
 
 /**
  *

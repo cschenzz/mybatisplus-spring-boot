@@ -1,4 +1,4 @@
-package com.baomidou.springboot.controller;
+package com.sibo.springboot.controller;
 
 import java.util.Date;
 
@@ -14,11 +14,11 @@ import com.baomidou.mybatisplus.extension.api.ApiController;
 import com.baomidou.mybatisplus.extension.api.Assert;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.springboot.ErrorCode;
-import com.baomidou.springboot.entity.User;
-import com.baomidou.springboot.entity.enums.AgeEnum;
-import com.baomidou.springboot.entity.enums.PhoneEnum;
-import com.baomidou.springboot.service.IUserService;
+import com.sibo.springboot.ErrorCode;
+import com.sibo.springboot.entity.User;
+import com.sibo.springboot.entity.enums.AgeEnum;
+import com.sibo.springboot.entity.enums.PhoneEnum;
+import com.sibo.springboot.service.IUserService;
 
 /**
  * 代码生成器，参考源码测试用例：
