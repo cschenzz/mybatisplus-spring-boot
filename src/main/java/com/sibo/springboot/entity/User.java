@@ -1,19 +1,23 @@
 package com.sibo.springboot.entity;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.sibo.springboot.entity.enums.AgeEnum;
 import com.sibo.springboot.entity.enums.PhoneEnum;
+
+import java.util.Date;
 
 /**
  * 用户表
  */
 @SuppressWarnings("serial")
-public class User extends SuperEntity<User> {
+public class User {
 
+    @TableId("test_id")
+    private Long id;
+    private Long tenantId;
 
     /**
      * 名称
@@ -55,6 +59,21 @@ public class User extends SuperEntity<User> {
         this.testType = testType;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
 
     public String getName() {
         return this.name;

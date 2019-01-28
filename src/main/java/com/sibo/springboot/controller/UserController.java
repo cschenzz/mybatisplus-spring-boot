@@ -1,13 +1,5 @@
 package com.sibo.springboot.controller;
 
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.ApiController;
@@ -19,6 +11,11 @@ import com.sibo.springboot.entity.User;
 import com.sibo.springboot.entity.enums.AgeEnum;
 import com.sibo.springboot.entity.enums.PhoneEnum;
 import com.sibo.springboot.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 代码生成器，参考源码测试用例：
@@ -52,24 +49,6 @@ public class UserController extends ApiController {
     @GetMapping("/test")
     public IPage<User> test() {
         return userService.page(new Page<User>(0, 12), null);
-    }
-
-    /**
-     * AR 部分测试
-     * http://localhost:8080/user/test1
-     */
-    @GetMapping("/test1")
-    public IPage<User> test1() {
-        User user = new User("testAr", AgeEnum.ONE, 1);
-        System.err.println("删除所有：" + user.delete(null));
-        user.setRole(111L);
-        user.setTestDate(new Date());
-        user.setPhone(PhoneEnum.CMCC);
-        user.insert();
-        System.err.println("查询插入结果：" + user.selectById().toString());
-        user.setName("mybatis-plus-ar");
-        System.err.println("更新：" + user.updateById());
-        return user.selectPage(new Page<User>(0, 12), null);
     }
 
     /**
