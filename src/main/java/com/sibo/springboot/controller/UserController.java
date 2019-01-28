@@ -1,5 +1,7 @@
 package com.sibo.springboot.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.ApiController;
@@ -101,21 +103,22 @@ public class UserController extends ApiController {
     }
 
     /**
-     * http://localhost:8080/user/select_sql
+     * http://localhost:8080/user/select-sql
      */
-    @GetMapping("/select_sql")
+    @GetMapping("/select-sql")
     public Object getUserBySql() {
         return userService.selectListBySQL();
     }
 
     /**
-     * http://localhost:8080/user/select_wrapper
+     * http://localhost:8080/user/select-wrapper
      */
-    @GetMapping("/select_wrapper")
+    @GetMapping("/select-wrapper")
     public Object getUserByWrapper() {
-        return userService.selectListByWrapper(new QueryWrapper<User>()
-                .lambda().like(User::getName, "毛")
-                .or(e -> e.like(User::getName, "张")));
+        Wrapper<User> wrapper = new LambdaQueryWrapper<User>()
+                .like(User::getName, "毛")
+                .or(e -> e.like(User::getName, "张"));
+        return userService.selectListByWrapper(wrapper);
     }
 
     /**
@@ -141,7 +144,7 @@ public class UserController extends ApiController {
 
     /**
      * 测试事物
-     * http://localhost:8080/user/test_transactional<br>
+     * http://localhost:8080/user/test-transactional<br>
      * 访问如下并未发现插入数据说明事物可靠！！<br>
      * http://localhost:8080/user/test<br>
      * <br>
@@ -149,7 +152,7 @@ public class UserController extends ApiController {
      * 需要事物的方法加上 @Transactional 必须的哦！！
      */
     @Transactional(rollbackFor = Exception.class)
-    @GetMapping("/test_transactional")
+    @GetMapping("/test-transactional")
     public void testTransactional() {
         User user = new User(1000L, "测试事物", AgeEnum.ONE, 3);
         userService.save(user);
