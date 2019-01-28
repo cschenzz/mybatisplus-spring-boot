@@ -1,18 +1,17 @@
 package com.sibo.springboot.mapper;
 
-import java.util.List;
-
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sibo.springboot.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.sibo.springboot.SuperMapper;
-import com.sibo.springboot.entity.User;
+import java.util.List;
 
 /**
  * User 表数据库控制层接口
  */
-public interface UserMapper extends SuperMapper<User> {
+public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 自定义注入方法
