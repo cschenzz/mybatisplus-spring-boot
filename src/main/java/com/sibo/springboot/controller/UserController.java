@@ -50,7 +50,7 @@ public class UserController extends ApiController {
      */
     @GetMapping("/test")
     public IPage<User> test() {
-        return userService.page(new Page<User>(0, 12), null);
+        return userService.page(new Page<User>(1, 12), null);
     }
 
     /**
